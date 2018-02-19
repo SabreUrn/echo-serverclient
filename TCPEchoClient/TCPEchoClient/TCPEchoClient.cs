@@ -23,26 +23,31 @@ namespace TCPEchoClient
         static void Main(string[] args)
         {
             //Console.ReadLine();
-            TcpClient clientSocket = new TcpClient("127.0.0.1", 6789);
+            TcpClient clientSocket = new TcpClient("192.168.43.55", 6789);
             Console.WriteLine("Client ready");
 
             Stream ns = clientSocket.GetStream();  //provides a Stream
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
-            sw.AutoFlush = true; // enable automatic flushing
+            sw.AutoFlush = true;
 
-            string message = Console.ReadLine();
-            sw.WriteLine(message);
-            string serverAnswer = sr.ReadLine();
+            string message = "";
 
-            Console.WriteLine("Server: " + serverAnswer);
 
-            Console.WriteLine("No more from server. Press Enter");
-            Console.ReadLine();
+            while (true)
+            {
+                // enable automatic flushing
 
-            ns.Close();
+                 message = Console.ReadLine();
+                sw.WriteLine(message);
+                string serverAnswer = sr.ReadLine();
 
-            clientSocket.Close();
+                Console.WriteLine("Server: " + serverAnswer);
+
+            }
+         
+
+        
 
         }
 
