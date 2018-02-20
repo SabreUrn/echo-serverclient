@@ -23,7 +23,7 @@ namespace TCPEchoClient
         static void Main(string[] args)
         {
             //Console.ReadLine();
-            TcpClient clientSocket = new TcpClient("192.168.43.55", 6789);
+            TcpClient clientSocket = WaitForServer();
             Console.WriteLine("Client ready");
 
             Stream ns = clientSocket.GetStream();  //provides a Stream
@@ -45,12 +45,25 @@ namespace TCPEchoClient
                 Console.WriteLine("Server: " + serverAnswer);
 
             }
-         
-
-        
-
         }
 
+        private static TcpClient WaitForServer() {
+            TcpClient clientSocket = new TcpClient();
+            bool serverFound = false;
+
+            while (!serverFound) {
+                try {
+                    clientSocket = new TcpClient("localhost", 6789);
+                    serverFound = true;
+                } catch (SocketException) {
+                    Console.WriteLine("Cannot find server. Check if server is running.");
+                    Console.WriteLine("Retrying in 5 seconds.");
+                    System.Threading.Thread.Sleep(5000);
+                }
+            }
+
+            return clientSocket;
+        }
     }
 
 }
