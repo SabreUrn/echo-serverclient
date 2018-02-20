@@ -34,6 +34,7 @@ namespace TCPEchoClient
             sw.AutoFlush = true;
 
             string message = "";
+            string serverAnswer = "";
 
 
             while (true)
@@ -41,8 +42,15 @@ namespace TCPEchoClient
                 // enable automatic flushing
 
                  message = Console.ReadLine();
-                sw.WriteLine(message);
-                string serverAnswer = sr.ReadLine();
+                try {
+                    sw.WriteLine(message);
+                    serverAnswer = sr.ReadLine();
+                } catch(IOException) {
+                    Console.WriteLine("Server connection closed.");
+                    Console.WriteLine("Press any key to exit.");
+                    Console.ReadKey();
+                    return;
+                }
 
                 Console.WriteLine("Server: " + serverAnswer);
 
