@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,9 @@ namespace TCPEchoClient
     {
         static void Main(string[] args)
         {
-            //Console.ReadLine();
-            TcpClient clientSocket = WaitForServer();
+            
+            string ip = Console.ReadLine();
+            TcpClient clientSocket = WaitForServer(ip);
             Console.WriteLine("Client ready");
 
             Stream ns = clientSocket.GetStream();  //provides a Stream
@@ -47,13 +49,13 @@ namespace TCPEchoClient
             }
         }
 
-        private static TcpClient WaitForServer() {
+        private static TcpClient WaitForServer(string ip) {
             TcpClient clientSocket = new TcpClient();
             bool serverFound = false;
 
             while (!serverFound) {
                 try {
-                    clientSocket = new TcpClient("localhost", 6789);
+                    clientSocket = new TcpClient(ip, 6789);
                     serverFound = true;
                 } catch (SocketException) {
                     Console.WriteLine("Cannot find server. Check if server is running.");
