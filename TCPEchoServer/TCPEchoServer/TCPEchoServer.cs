@@ -66,7 +66,14 @@ namespace TCPEchoServer {
             using (StreamWriter sw = new StreamWriter(ns)) {
                 sw.AutoFlush = true;
                 while (true) {
-                    string readMessage = sr.ReadLine();
+                    //string readMessage = sr.ReadLine();
+                    string readMessage = "";
+                    try {
+                        readMessage = sr.ReadLine();
+                    } catch (IOException) {
+                        Console.WriteLine("Client connection closed.");
+                        return;
+                    }
                     string writeMessage = "";
 
                     Console.WriteLine(readMessage);
@@ -74,7 +81,12 @@ namespace TCPEchoServer {
                         Console.WriteLine("Client: " + readMessage);
                         writeMessage = readMessage.ToUpper();
                         sw.WriteLine(writeMessage);
-                        readMessage = sr.ReadLine();
+                        try {
+                            readMessage = sr.ReadLine();
+                        } catch (IOException) {
+                            Console.WriteLine("Client connection closed.");
+                            return;
+                        }
                     }
                 }
             }

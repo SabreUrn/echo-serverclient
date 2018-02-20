@@ -23,7 +23,7 @@ namespace TCPEchoClient
     {
         static void Main(string[] args)
         {
-            
+            Console.Write("Enter IP: ");
             string ip = Console.ReadLine();
             TcpClient clientSocket = WaitForServer(ip);
             Console.WriteLine("Client ready");
