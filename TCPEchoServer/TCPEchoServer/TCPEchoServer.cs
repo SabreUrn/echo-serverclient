@@ -31,7 +31,7 @@ namespace TCPEchoServer {
             while (true) {
                 TcpClient client = serverSocket.AcceptTcpClient();
                 //Task.Run(() => EchoService.DoClient(client));
-                Thread t = new Thread(EchoService.DoClient(client));
+                Thread t = new Thread(() => EchoService.DoClient(client));
                 t.Start();
             }
         }

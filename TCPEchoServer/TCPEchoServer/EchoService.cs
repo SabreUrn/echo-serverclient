@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TCPEchoServer {
     public static class EchoService {
-        public static ThreadStart DoClient(TcpClient client) {
+        public static void DoClient(TcpClient client) {
             using (NetworkStream ns = client.GetStream())
             using (StreamReader sr = new StreamReader(ns))
             using (StreamWriter sw = new StreamWriter(ns)) {
@@ -21,7 +21,7 @@ namespace TCPEchoServer {
                         readMessage = sr.ReadLine();
                     } catch (IOException) {
                         Console.WriteLine("Client connection closed.");
-                        return default;
+                        return;
                     }
                     string writeMessage = "";
 
@@ -34,7 +34,7 @@ namespace TCPEchoServer {
                             readMessage = sr.ReadLine();
                         } catch (IOException) {
                             Console.WriteLine("Client connection closed.");
-                            return default;
+                            return;
                         }
                     }
                 }
